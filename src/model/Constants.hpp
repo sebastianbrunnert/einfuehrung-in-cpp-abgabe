@@ -1,0 +1,13 @@
+// define some constants to make code more readable
+namespace constants {
+    constexpr int ALIEN_RADIUS = 10;
+    constexpr int ALIEN_GAP = 9;
+    constexpr int SHIP_WIDTH = 30;
+    constexpr int SHIP_HEIGHT = 10;
+    constexpr int SHIP_SPEED = 3;
+    constexpr int ALIEN_COLUMNS = 10;
+    constexpr int ALIEN_ROWS = 5;
+    constexpr int VIEW_WIDTH = 600;
+    constexpr int VIEW_HEIGHT = 600;
+    constexpr unsigned int FRAME_RATE = 60;
+}

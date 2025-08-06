@@ -1,0 +1,25 @@
+# Model
+set(ModelSources
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/Ship.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/Alien.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/AlienBlock.cpp
+    )
+
+# Controller
+set(ControlSources
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/Game.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/ShipControl.cpp
+    )
+
+# View
+set(ViewSources
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/Layer.cpp
+    )
+
+# add src code to target
+add_executable(SpaceInvaders
+        ${ModelSources}
+        ${ControlSources}
+        ${ViewSources}
+        ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+        )
