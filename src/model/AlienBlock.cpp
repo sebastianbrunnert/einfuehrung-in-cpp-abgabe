@@ -45,3 +45,8 @@ bool AlienBlock::isDefeated() const {
 const std::vector<Alien>& AlienBlock::getAliens() {
     return aliens;
 }
+
+void AlienBlock::remove_alien(const Alien &alien) {
+    // Remove the alien from the block
+    aliens.erase(std::remove(aliens.begin(), aliens.end(), alien), aliens.end());
+}

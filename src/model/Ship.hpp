@@ -42,11 +42,6 @@ public:
     void moveRight();
 
     /**
-     * @brief Fires a bullet from the ship
-     */
-    void shoot();
-    
-    /**
      * @brief Alien hits the ship, reduces lives by one
      * @throws std::runtime_error if the ship has no lives left
      */
@@ -56,11 +51,6 @@ public:
      * @return The horizontal position of the ship
      */
     int getX() const;
-
-    /**
-     * @return The width of the ship
-     */
-    int getWidth() const;
     
     /**
      * @return The remaining lives of the ship

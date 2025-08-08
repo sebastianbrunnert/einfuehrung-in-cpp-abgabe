@@ -5,9 +5,14 @@ namespace constants {
     constexpr int SHIP_WIDTH = 30;
     constexpr int SHIP_HEIGHT = 10;
     constexpr int SHIP_SPEED = 3;
+    constexpr int SHIP_Y = 580;
     constexpr int ALIEN_COLUMNS = 10;
     constexpr int ALIEN_ROWS = 5;
     constexpr int VIEW_WIDTH = 600;
     constexpr int VIEW_HEIGHT = 600;
+    constexpr int BULLET_SPEED = 5;
+    constexpr int BULLET_WIDTH = 2;
+    constexpr int BULLET_HEIGHT = 10;
+    constexpr int BULLET_FIRE_RATE = 500;
     constexpr unsigned int FRAME_RATE = 60;
 }

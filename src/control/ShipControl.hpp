@@ -4,6 +4,8 @@
 #include "../view/Layer.hpp"
 #include "../model/Ship.hpp"
 
+#include "BulletControl.hpp"
+
 /**
  * @brief Creates and controls the ship
  */
@@ -15,11 +17,14 @@ private:
     // The layer on which the ship is drawn
     Layer &layer;
 
+    // The control for the bullets fired by the ship
+    BulletControl &bullet_control;
+
 public:
     /**
      * @param layer The layer on which the ship will be drawn
      */
-    ShipControl(Layer &layer);
+    ShipControl(Layer &layer, BulletControl &bullet_control);
 
     /**
      * @brief Draws the ship on the layer

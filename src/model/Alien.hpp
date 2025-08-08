@@ -6,10 +6,15 @@
  */
 class Alien {
 private:
+    // Unique identifier for the alien
+    int id;
     // Horizontal position of the alien (the leftmost point of the alien)
     int x;
     // Vertical position of the alien (the topmost point of the alien)
     int y;
+
+    // Static variable to generate unique IDs for aliens
+    static int next_id;
 
 public:
     /**
@@ -61,6 +66,11 @@ public:
      * @return The vertical position of the alien
      */
     int getY() const;
+
+    /**
+     * @return True if this alien is equal to another alien, false otherwise (based on ID)
+     */
+    bool operator==(const Alien& other) const;
 };
 
 #endif

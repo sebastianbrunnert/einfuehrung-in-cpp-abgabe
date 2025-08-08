@@ -6,6 +6,7 @@
 #include "../view/Layer.hpp"
 #include "ShipControl.hpp"
 #include "AlienBlockControl.hpp"
+#include "BulletControl.hpp"
 
 // Game class
 class Game {
@@ -34,6 +35,7 @@ private:
     Layer game_layer;
 
     // Controls for different parts of the game
+    BulletControl bullet_control;
     ShipControl ship_control;
     AlienBlockControl alien_block_control;
 };

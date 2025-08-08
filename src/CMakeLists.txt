@@ -3,6 +3,7 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Ship.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Alien.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/AlienBlock.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/Bullet.cpp
     )
 
 # Controller

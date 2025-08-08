@@ -38,10 +38,6 @@ void Ship::moveRight() {
     }
 }
 
-void Ship::shoot() {
-    // TODO: Implement shooting logic
-}
-
 void Ship::takeHit() {
     // Decrease lives only if ship has lives remaining
     if (lives == 1) {

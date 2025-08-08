@@ -2,12 +2,17 @@
 #include "Constants.hpp"
 #include <stdexcept>
 
+int Alien::next_id = 0;
+
 // Constructor with input validation
 Alien::Alien(int x, int y) : x(x), y(y) {
     // Validate that alien position is within view boundaries
     if (x < 0 || y < 0 || x > constants::VIEW_WIDTH - constants::ALIEN_RADIUS*2 || y > constants::VIEW_HEIGHT - constants::ALIEN_RADIUS*2) {
         throw std::out_of_range("Alien position out of bounds");
     }
+
+    // Assign a unique ID to the alien
+    id = next_id++;
 }
 
 bool Alien::canMoveDown() {
@@ -61,4 +66,8 @@ int Alien::getX() const {
 
 int Alien::getY() const {
     return y;
+}
+
+bool Alien::operator==(const Alien& other) const {
+    return id == other.id;
 }

@@ -22,6 +22,8 @@ public:
      */
     void move();
 
+    void remove_alien(const Alien &alien);
+
     /**
      * @return Whether there are any aliens left in the block
      */

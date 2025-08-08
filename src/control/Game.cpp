@@ -7,8 +7,9 @@
 Game::Game() : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Space Invaders"),
     view(sf::FloatRect(sf::Vector2f({0, 0}), sf::Vector2f({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}))),
     game_layer(window),
-    ship_control(game_layer),
-    alien_block_control(game_layer) {
+    bullet_control(game_layer),
+    ship_control(game_layer, bullet_control),
+    alien_block_control(game_layer, bullet_control) {
     // limit frame rate
     window.setFramerateLimit(constants::FRAME_RATE);
 
@@ -69,6 +70,9 @@ void Game::update(float time_passed) {
         alien_block_control.move();
         frame_count = 0;
     }
+
+    bullet_control.update_bullets();
+    alien_block_control.check_collisions();
 }
 
 void Game::draw() {
@@ -77,6 +81,7 @@ void Game::draw() {
     game_layer.clear();
 
     ship_control.draw_ship();
+    bullet_control.draw_bullets();
     alien_block_control.draw_alien_block();
     
     game_layer.draw();
