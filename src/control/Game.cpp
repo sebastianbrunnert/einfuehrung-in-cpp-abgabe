@@ -7,6 +7,7 @@
 Game::Game() : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Space Invaders"),
     view(sf::FloatRect(sf::Vector2f({0, 0}), sf::Vector2f({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}))),
     game_layer(window),
+    information_layer(window),
     bullet_control(game_layer),
     ship_control(game_layer, bullet_control),
     alien_block_control(game_layer, bullet_control) {
@@ -15,6 +16,7 @@ Game::Game() : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIG
 
     // set the view (visible area) for our game
     game_layer.set_view(view);
+    information_layer.set_view(view);
 }
 
 void Game::start() {
@@ -73,18 +75,23 @@ void Game::update(float time_passed) {
 
     bullet_control.update_bullets();
     alien_block_control.check_collisions();
+    alien_block_control.shoot();
+
+    ship_control.check_collisions();
 }
 
 void Game::draw() {
     window.clear();
 
     game_layer.clear();
+    information_layer.clear();
 
     ship_control.draw_ship();
     bullet_control.draw_bullets();
     alien_block_control.draw_alien_block();
     
     game_layer.draw();
+    information_layer.draw();
 
     window.display();
 }

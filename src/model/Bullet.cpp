@@ -6,7 +6,7 @@
 
 int Bullet::next_id = 0;
 
-Bullet::Bullet(int x, int y) : x(x), y(y) {
+Bullet::Bullet(int x, int y, bool is_from_alien) : x(x), y(y), is_from_alien(is_from_alien) {
     // Validate that bullet position is within view boundaries
     if (isOutOfBounds()) {
         throw std::out_of_range("Bullet position out of bounds");
@@ -21,17 +21,21 @@ bool Bullet::isOutOfBounds() const {
 }
 
 void Bullet::update() {
-    // Move the bullet upwards
-    y -= constants::BULLET_SPEED;
+    // Move the bullet in the appropriate direction
+    if(is_from_alien) {
+        y += constants::BULLET_SPEED;
+    } else {
+        y -= constants::BULLET_SPEED;
+    }
 }
 
 bool Bullet::collidesWithShip(const Ship& ship) const {
-    return (x >= ship.getX() && x <= ship.getX() + constants::SHIP_WIDTH &&
+    return is_from_alien && (x >= ship.getX() && x <= ship.getX() + constants::SHIP_WIDTH &&
             y >= constants::SHIP_Y && y <= constants::SHIP_Y + constants::SHIP_HEIGHT);
 }
 
 bool Bullet::collidesWithAlien(const Alien& alien) const {
-    return (x >= alien.getX() && x <= alien.getX() + constants::ALIEN_RADIUS*2 &&
+    return !is_from_alien && (x >= alien.getX() && x <= alien.getX() + constants::ALIEN_RADIUS*2 &&
             y >= alien.getY() && y <= alien.getY() + constants::ALIEN_RADIUS*2);
 }
 

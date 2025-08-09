@@ -15,6 +15,8 @@ private:
     int x;
     // Vertical position of the alien (the topmost point of the bullet)
     int y;
+    // Is it a bullet by alien or by ship?
+    bool is_from_alien;
 
     // Static variable to generate unique IDs for bullets
     static int next_id;
@@ -23,9 +25,10 @@ public:
     /**
      * @param x Initial horizontal position
      * @param y Initial vertical position
+     * @param is_from_alien Is the bullet from an alien?
      * @throws std::out_of_range if x is out of bounds
      */
-    Bullet(int x, int y);
+    Bullet(int x, int y, bool is_from_alien);
 
     /**
      * @param ship The ship to check collision with

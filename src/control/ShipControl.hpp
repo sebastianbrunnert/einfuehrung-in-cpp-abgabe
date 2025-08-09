@@ -45,6 +45,11 @@ public:
      * @brief Handles the space key press event to shoot
      */
     void space_pressed();
+
+    /**
+     * @brief Handles the bullet collision with the ship
+     */
+    void check_collisions();
 };
 
 #endif

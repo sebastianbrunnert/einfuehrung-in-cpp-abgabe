@@ -92,3 +92,11 @@ TEST(AlienTest, MoveDown) {
     EXPECT_EQ(alien.getY(), startY + 2 * (constants::ALIEN_GAP + constants::ALIEN_RADIUS * 2));
     EXPECT_FALSE(alien.canMoveDown());
 }
+
+TEST(AlienTest, Equal) {
+    Alien alien1(0, 0);
+    Alien alien2(0, 0);
+
+    EXPECT_TRUE(alien1 == alien1);
+    EXPECT_FALSE(alien1 == alien2);
+}

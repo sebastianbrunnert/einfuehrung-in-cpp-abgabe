@@ -33,6 +33,7 @@ private:
     // view area and layers
     sf::View view;
     Layer game_layer;
+    Layer information_layer;
 
     // Controls for different parts of the game
     BulletControl bullet_control;

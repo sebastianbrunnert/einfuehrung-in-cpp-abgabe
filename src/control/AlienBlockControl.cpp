@@ -37,3 +37,24 @@ void AlienBlockControl::reset() {
     alien_block = AlienBlock();
     bullet_control.clear_bullets();
 }
+
+void AlienBlockControl::shoot() {
+    for(int i = 0; i < alien_block.getAliens().size(); i++) {
+        const Alien& alien = alien_block.getAliens()[i];
+        bool canShoot = true;
+
+        // Check if there is an alien below
+        for(int j = i + 1; j < alien_block.getAliens().size(); j++) {
+            const Alien& below_alien = alien_block.getAliens()[j];
+            if(below_alien.getX() == alien.getX()) {
+                canShoot = false;
+                break; 
+            }
+        }
+
+        if (canShoot && rand() % 10000 < 5) {
+            bullet_control.add_bullet(Bullet(alien.getX() + constants::ALIEN_RADIUS - constants::BULLET_WIDTH / 2,
+                                              alien.getY() + constants::ALIEN_RADIUS * 2, true));
+        }
+    }
+}

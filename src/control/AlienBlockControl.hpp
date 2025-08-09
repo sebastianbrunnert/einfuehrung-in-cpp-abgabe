@@ -51,6 +51,11 @@ public:
      * @brief Resets the alien block to its initial state
      */
     void reset();
+
+    /**
+     * @brief Makes the alien block shoot a bullet
+     */
+    void shoot();
 };
 
 #endif
