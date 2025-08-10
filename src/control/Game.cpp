@@ -1,43 +1,39 @@
 #include "Game.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Font.hpp>
 
 #include "../model/Constants.hpp"
 
-Game::Game() : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Space Invaders"),
-    view(sf::FloatRect(sf::Vector2f({0, 0}), sf::Vector2f({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}))),
-    game_layer(window),
-    information_layer(window),
-    bullet_control(game_layer),
-    ship_control(game_layer, bullet_control),
-    alien_block_control(game_layer, bullet_control) {
-    // limit frame rate
+Game::Game() 
+    : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Space Invaders"),
+      view(sf::FloatRect(sf::Vector2f({0, 0}), sf::Vector2f({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}))),
+      game_layer(window),
+      information_layer(window),
+      bullet_control(game_layer),
+      ship_control(game_layer, information_layer, bullet_control),
+      alien_block_control(game_layer, bullet_control) 
+{
     window.setFramerateLimit(constants::FRAME_RATE);
 
-    // set the view (visible area) for our game
     game_layer.set_view(view);
     information_layer.set_view(view);
 }
 
 void Game::start() {
-    // The clock is needed to control the speed of movement
     sf::Clock clock;
 
     while (window.isOpen()) {
-        // Restart the clock and save the elapsed time into elapsed_time
         sf::Time elapsed_time = clock.restart();
- 
-        // handle input, check if window is still open
+
         if (!input()) {
-            // update the scene according to the passed time
             update(elapsed_time.asSeconds());
-            // draw the scene
             draw();
         }
     }
 }
 
-// returns true, if the window has been closed
 bool Game::input() {
     while (std::optional<sf::Event> event = window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {
@@ -52,7 +48,6 @@ bool Game::input() {
         }
     }
 
-    // Use real-time input for continuous movement
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
         ship_control.left_button_pressed();
     }
@@ -63,21 +58,41 @@ bool Game::input() {
     return false;
 }
 
-
 void Game::update(float time_passed) {
-    // Each 0.25 seconds, move the alien block
+    // If game is over, stop updating
+    if (is_game_over) {
+        return;
+    }
+
+
+    // Move the aliens in the proper speed
     static int frame_count = 0;
+    static float speed = 4.f;
     frame_count++;
-    if (frame_count >= constants::FRAME_RATE / 4) {
+    if (frame_count >= constants::FRAME_RATE / speed) {
         alien_block_control.move();
         frame_count = 0;
     }
 
+    // Update bullets
     bullet_control.update_bullets();
+
+    // Check for collisions. If ship is hit and has no lives, game is over
     alien_block_control.check_collisions();
+    try {
+        ship_control.check_collisions();
+    } catch (const std::runtime_error& e) {
+        is_game_over = true;
+    }
+
+    // Shoot bullets from the alien block
     alien_block_control.shoot();
 
-    ship_control.check_collisions();
+    // Increase speed if alien block is defeated
+    if(alien_block_control.isDefeated()) {
+        alien_block_control.reset();
+        speed = speed * 1.3f;
+    }
 }
 
 void Game::draw() {
@@ -89,7 +104,25 @@ void Game::draw() {
     ship_control.draw_ship();
     bullet_control.draw_bullets();
     alien_block_control.draw_alien_block();
-    
+    ship_control.draw_lives();
+
+    if (is_game_over) {
+        sf::Font font;
+        if (!font.openFromFile("assets/fonts/DejaVuSansMono.ttf")) {
+            throw std::runtime_error("Failed to load font");
+        }
+
+        sf::Text text(font, "Game Over", 50);
+        text.setFillColor(sf::Color::White);
+        text.setStyle(sf::Text::Bold);
+
+        sf::FloatRect text_bounds = text.getLocalBounds();
+        text.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});
+        text.setPosition({constants::VIEW_WIDTH / 2.f, constants::VIEW_HEIGHT / 2.f});
+
+        game_layer.add_to_layer(text);
+    }
+
     game_layer.draw();
     information_layer.draw();
 

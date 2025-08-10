@@ -39,6 +39,8 @@ private:
     BulletControl bullet_control;
     ShipControl ship_control;
     AlienBlockControl alien_block_control;
+
+    bool is_game_over = false;
 };
 
 #endif

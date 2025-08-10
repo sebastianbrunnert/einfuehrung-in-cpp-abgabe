@@ -3,7 +3,7 @@
 #include "../model/Bullet.hpp"
 
 // Constructor: Initialize ship at middle of the screen with 3 lives
-ShipControl::ShipControl(Layer &layer, BulletControl &bullet_control) : ship(constants::VIEW_WIDTH / 2 - constants::SHIP_WIDTH / 2, 3), layer(layer), bullet_control(bullet_control) {
+ShipControl::ShipControl(Layer &game_layer, Layer &information_layer, BulletControl &bullet_control) : ship(constants::VIEW_WIDTH / 2 - constants::SHIP_WIDTH / 2, 3), game_layer(game_layer), information_layer(information_layer), bullet_control(bullet_control) {
 
 }
 
@@ -15,7 +15,19 @@ void ShipControl::draw_ship() {
     shipRect.setPosition(sf::Vector2f(ship.getX(), constants::SHIP_Y));
     shipRect.setFillColor(sf::Color::White);
     
-    layer.add_to_layer(shipRect);
+    game_layer.add_to_layer(shipRect);
+}
+
+void ShipControl::draw_lives() {
+    // Draw the lives as circles
+    for (int i = 0; i < ship.getLives(); ++i) {
+        sf::CircleShape circle;
+        circle.setRadius(5);
+        circle.setFillColor(sf::Color::Red);
+        circle.setPosition(sf::Vector2f(10 + i * 15, 10));
+        
+        information_layer.add_to_layer(circle);
+    }
 }
 
 void ShipControl::left_button_pressed() {
@@ -42,11 +54,7 @@ void ShipControl::check_collisions() {
     for (const auto& bullet : bullet_control.getBullets()) {
         if (bullet.collidesWithShip(ship)) {
             bullet_control.remove_bullet(bullet);
-            try {
-                ship.takeHit();
-            } catch (const std::runtime_error& e) {
-                printf("GAME OVER!");
-            }
+            ship.takeHit();
         }
     }
 }
