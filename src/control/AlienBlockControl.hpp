@@ -34,6 +34,7 @@ public:
 
     /**
      * @brief Moves the alien block
+     * @throws std::out_of_range if the aliens would move out of bounds
      */
     void move();
 

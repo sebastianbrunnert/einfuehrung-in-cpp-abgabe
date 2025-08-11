@@ -19,6 +19,7 @@ public:
 
     /**
      * @brief Moves the whole blocks of aliens to the current direction
+     * @throws std::out_of_range if the aliens would move out of bounds
      */
     void move();
 

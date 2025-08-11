@@ -40,14 +40,15 @@ bool Game::input() {
             window.close();
             return true;
         }
-
-        if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-            if (keyPressed->code == sf::Keyboard::Key::Space) {
-                ship_control.space_pressed();
-            }
-        }
     }
 
+    if(is_game_over) {
+        return false;
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+        ship_control.space_pressed();
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
         ship_control.left_button_pressed();
     }
@@ -64,13 +65,16 @@ void Game::update(float time_passed) {
         return;
     }
 
-
     // Move the aliens in the proper speed
     static int frame_count = 0;
     static float speed = 4.f;
     frame_count++;
     if (frame_count >= constants::FRAME_RATE / speed) {
-        alien_block_control.move();
+        try {
+            alien_block_control.move();
+        } catch (const std::out_of_range& e) {
+            is_game_over = true;
+        }
         frame_count = 0;
     }
 

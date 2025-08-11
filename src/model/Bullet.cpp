@@ -30,13 +30,25 @@ void Bullet::update() {
 }
 
 bool Bullet::collidesWithShip(const Ship& ship) const {
-    return is_from_alien && (x >= ship.getX() && x <= ship.getX() + constants::SHIP_WIDTH &&
-            y >= constants::SHIP_Y && y <= constants::SHIP_Y + constants::SHIP_HEIGHT);
+    // Only alien bullets can hit the ship
+    if (!is_from_alien) return false;
+    
+    // Check if bullet rectangle overlaps with ship rectangle
+    return (x < ship.getX() + constants::SHIP_WIDTH &&
+            x + constants::BULLET_WIDTH > ship.getX() &&
+            y < constants::SHIP_Y + constants::SHIP_HEIGHT &&
+            y + constants::BULLET_HEIGHT > constants::SHIP_Y);
 }
 
 bool Bullet::collidesWithAlien(const Alien& alien) const {
-    return !is_from_alien && (x >= alien.getX() && x <= alien.getX() + constants::ALIEN_RADIUS*2 &&
-            y >= alien.getY() && y <= alien.getY() + constants::ALIEN_RADIUS*2);
+    // Only ship bullets can hit aliens
+    if (is_from_alien) return false;
+    
+    // Check if bullet rectangle overlaps with alien circle (treated as square for simplicity)
+    return (x < alien.getX() + constants::ALIEN_RADIUS * 2 &&
+            x + constants::BULLET_WIDTH > alien.getX() &&
+            y < alien.getY() + constants::ALIEN_RADIUS * 2 &&
+            y + constants::BULLET_HEIGHT > alien.getY());
 }
 
 int Bullet::getX() const {

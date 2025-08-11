@@ -11,13 +11,13 @@ TEST(AlienBlockTest, Constructor) {
     // Check positions of some aliens
     const auto& aliens = block.getAliens();
     EXPECT_EQ(aliens[0].getX(), 0);
-    EXPECT_EQ(aliens[0].getY(), 0);
+    EXPECT_EQ(aliens[0].getY(), constants::ALIEN_RADIUS*2 + constants::ALIEN_GAP);
     
     EXPECT_EQ(aliens[1].getX(), constants::ALIEN_RADIUS * 2 + constants::ALIEN_GAP);
-    EXPECT_EQ(aliens[1].getY(), 0);
+    EXPECT_EQ(aliens[1].getY(), constants::ALIEN_RADIUS*2 + constants::ALIEN_GAP);
 
     EXPECT_EQ(aliens[10].getX(), 0);
-    EXPECT_EQ(aliens[10].getY(), constants::ALIEN_RADIUS * 2 + constants::ALIEN_GAP);
+    EXPECT_EQ(aliens[10].getY(), constants::ALIEN_RADIUS * 4 + constants::ALIEN_GAP * 2);
 }
 
 TEST(AlienBlockTest, Move) {
@@ -27,13 +27,13 @@ TEST(AlienBlockTest, Move) {
     const auto& aliens = block.getAliens();
 
     EXPECT_EQ(aliens[0].getX(), constants::ALIEN_GAP);
-    EXPECT_EQ(aliens[0].getY(), 0);
+    EXPECT_EQ(aliens[0].getY(), constants::ALIEN_RADIUS*2 + constants::ALIEN_GAP);
 
     EXPECT_EQ(aliens[1].getX(), constants::ALIEN_RADIUS * 2 + 2 * constants::ALIEN_GAP);
-    EXPECT_EQ(aliens[1].getY(), 0);
+    EXPECT_EQ(aliens[1].getY(), constants::ALIEN_RADIUS*2 + constants::ALIEN_GAP);
 
     EXPECT_EQ(aliens[10].getX(), constants::ALIEN_GAP);
-    EXPECT_EQ(aliens[10].getY(), constants::ALIEN_RADIUS * 2 + constants::ALIEN_GAP);
+    EXPECT_EQ(aliens[10].getY(), constants::ALIEN_RADIUS * 4 + constants::ALIEN_GAP * 2);
 }
 
 TEST(AlienBlockTest, MoveMultiple) {

@@ -8,7 +8,7 @@ AlienBlock::AlienBlock() {
         for(int j = 0; j < constants::ALIEN_COLUMNS; j++) {            
             Alien alien(
                 j * (constants::ALIEN_RADIUS*2 + constants::ALIEN_GAP),
-                i * (constants::ALIEN_RADIUS*2 + constants::ALIEN_GAP)
+                (i+1) * (constants::ALIEN_RADIUS*2 + constants::ALIEN_GAP)
             );
             aliens.push_back(alien);
         }
