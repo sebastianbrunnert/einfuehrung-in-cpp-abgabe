@@ -18,15 +18,18 @@ void AlienBlockControl::move() {
     alien_block.move();
 }
 
-void AlienBlockControl::check_collisions() {
+int AlienBlockControl::check_collisions() {
+    int defeated_aliens = 0;
     for(const auto& alien : alien_block.getAliens()) {
         for(const auto& bullet : bullet_control.getBullets()) {
             if(bullet.collidesWithAlien(alien)) {
                 bullet_control.remove_bullet(bullet);
                 alien_block.remove_alien(alien);
+                defeated_aliens++;
             }
         }
     }
+    return defeated_aliens;
 }
 
 bool AlienBlockControl::isDefeated() const {
@@ -38,7 +41,7 @@ void AlienBlockControl::reset() {
     bullet_control.clear_bullets();
 }
 
-void AlienBlockControl::shoot() {
+void AlienBlockControl::shoot(int prob) {
     for(int i = 0; i < alien_block.getAliens().size(); i++) {
         const Alien& alien = alien_block.getAliens()[i];
         bool canShoot = true;
@@ -52,7 +55,7 @@ void AlienBlockControl::shoot() {
             }
         }
 
-        if (canShoot && rand() % 10000 < 5) {
+        if (canShoot && rand() % 10000 < prob) {
             bullet_control.add_bullet(Bullet(alien.getX() + constants::ALIEN_RADIUS - constants::BULLET_WIDTH / 2,
                                               alien.getY() + constants::ALIEN_RADIUS * 2, true));
         }

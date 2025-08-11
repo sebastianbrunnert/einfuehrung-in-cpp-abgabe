@@ -77,22 +77,54 @@ void Game::update(float time_passed) {
     // Update bullets
     bullet_control.update_bullets();
 
-    // Check for collisions. If ship is hit and has no lives, game is over
-    alien_block_control.check_collisions();
+    // Check for collisions
+
+    // Update points
+    points = points + alien_block_control.check_collisions();
     try {
         ship_control.check_collisions();
     } catch (const std::runtime_error& e) {
+        // If ship is hit and has no lives, game is over
         is_game_over = true;
     }
 
     // Shoot bullets from the alien block
-    alien_block_control.shoot();
+    static int shoot_prob = 5;
+    alien_block_control.shoot(shoot_prob);
 
-    // Increase speed if alien block is defeated
+    // Increase speed if alien block and shooting probabilty is defeated
     if(alien_block_control.isDefeated()) {
         alien_block_control.reset();
         speed = speed * 1.3f;
+        shoot_prob = shoot_prob + 3;
     }
+}
+
+void Game::draw_informations() {
+    sf::Font font;
+    if (!font.openFromFile("assets/fonts/DejaVuSansMono.ttf")) {
+        throw std::runtime_error("Failed to load font");
+    }
+
+    if (is_game_over) {
+        sf::Text game_over_text(font, "Game Over", 50);
+        game_over_text.setFillColor(sf::Color::White);
+        game_over_text.setStyle(sf::Text::Bold);
+
+        sf::FloatRect go_text_bounds = game_over_text.getLocalBounds();
+        game_over_text.setOrigin({go_text_bounds.size.x / 2.f, go_text_bounds.size.y / 2.f});
+        game_over_text.setPosition({constants::VIEW_WIDTH / 2.f, constants::VIEW_HEIGHT / 2.f});
+
+        information_layer.add_to_layer(game_over_text);
+    }
+
+    sf::Text points_text(font, "Punkte: " + std::to_string(points), 16);
+    points_text.setFillColor(sf::Color::White);
+
+    sf::FloatRect points_bounds = points_text.getLocalBounds();
+    points_text.setOrigin({points_bounds.size.x, points_bounds.size.y / 2.f});
+    points_text.setPosition({constants::VIEW_WIDTH - 10, 10});
+    information_layer.add_to_layer(points_text);
 }
 
 void Game::draw() {
@@ -106,22 +138,7 @@ void Game::draw() {
     alien_block_control.draw_alien_block();
     ship_control.draw_lives();
 
-    if (is_game_over) {
-        sf::Font font;
-        if (!font.openFromFile("assets/fonts/DejaVuSansMono.ttf")) {
-            throw std::runtime_error("Failed to load font");
-        }
-
-        sf::Text text(font, "Game Over", 50);
-        text.setFillColor(sf::Color::White);
-        text.setStyle(sf::Text::Bold);
-
-        sf::FloatRect text_bounds = text.getLocalBounds();
-        text.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});
-        text.setPosition({constants::VIEW_WIDTH / 2.f, constants::VIEW_HEIGHT / 2.f});
-
-        game_layer.add_to_layer(text);
-    }
+    draw_informations();
 
     game_layer.draw();
     information_layer.draw();

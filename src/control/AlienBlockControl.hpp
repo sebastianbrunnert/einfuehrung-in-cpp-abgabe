@@ -39,8 +39,9 @@ public:
 
     /**
      * @brief Handles the bullet collision with the alien block
+     * @return The number of defeated aliens
      */
-    void check_collisions();
+    int check_collisions();
 
     /**
      * @brief Return true if the alien block is defeated
@@ -54,8 +55,9 @@ public:
 
     /**
      * @brief Makes the alien block shoot a bullet
+     * @param prob The probability of shooting (in permille)
      */
-    void shoot();
+    void shoot(int prob);
 };
 
 #endif

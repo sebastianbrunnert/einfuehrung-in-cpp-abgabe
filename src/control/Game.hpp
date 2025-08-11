@@ -28,6 +28,9 @@ private:
     // draws the scene
     void draw();
 
+    // draws the informations on the information layer
+    void draw_informations();
+
     sf::RenderWindow window;
 
     // view area and layers
@@ -41,6 +44,7 @@ private:
     AlienBlockControl alien_block_control;
 
     bool is_game_over = false;
+    int points = 0;
 };
 
 #endif
