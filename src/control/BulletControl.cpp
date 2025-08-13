@@ -37,6 +37,10 @@ const std::vector<Bullet>& BulletControl::getBullets() const {
     return bullets;
 }
 
+std::vector<Bullet>& BulletControl::getBullets() {
+    return bullets;
+}
+
 void BulletControl::remove_bullet(const Bullet &bullet) {
     bullets.erase(std::remove(bullets.begin(), bullets.end(), bullet), bullets.end());
 }

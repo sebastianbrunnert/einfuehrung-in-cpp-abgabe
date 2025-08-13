@@ -10,6 +10,9 @@ set(ModelSources
 set(ControlSources
     ${CMAKE_CURRENT_SOURCE_DIR}/control/Game.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/ShipControl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/AlienBlockControl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/BulletControl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/BarrierControl.cpp
     )
 
 # View

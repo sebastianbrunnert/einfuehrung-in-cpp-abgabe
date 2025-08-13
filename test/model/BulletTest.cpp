@@ -68,15 +68,18 @@ TEST(BulletTest, CollidesWithAlien) {
 
 TEST(BulletTest, CollidesWithShip) {
     Bullet ship_bullet(0, 0, false);
-    Bullet bullet(0, 0, true);
+    Bullet bullet1(0, constants::SHIP_Y, true);
+    Bullet bullet2(0, constants::SHIP_Y - constants::BULLET_HEIGHT, true);
     Ship ship1(0, 0);
     Ship ship2(constants::BULLET_WIDTH-1, 0);
     Ship ship3(constants::BULLET_WIDTH, 0);
     Ship ship4(constants::BULLET_WIDTH+1, 0);
 
     EXPECT_FALSE(ship_bullet.collidesWithShip(ship1));
-    EXPECT_TRUE(bullet.collidesWithShip(ship1));
-    EXPECT_TRUE(bullet.collidesWithShip(ship2));
-    EXPECT_FALSE(bullet.collidesWithShip(ship3));
-    EXPECT_FALSE(bullet.collidesWithShip(ship4));
+    EXPECT_TRUE(bullet1.collidesWithShip(ship1));
+    EXPECT_TRUE(bullet1.collidesWithShip(ship2));
+    EXPECT_FALSE(bullet1.collidesWithShip(ship3));
+    EXPECT_FALSE(bullet1.collidesWithShip(ship4));
+    EXPECT_FALSE(bullet2.collidesWithShip(ship1));
+    EXPECT_FALSE(bullet2.collidesWithShip(ship2));
 }

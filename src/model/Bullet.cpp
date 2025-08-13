@@ -3,6 +3,7 @@
 #include "Ship.hpp"
 #include "Constants.hpp"
 #include <stdexcept>
+#include <cstdio>
 
 int Bullet::next_id = 0;
 
@@ -32,7 +33,7 @@ void Bullet::update() {
 bool Bullet::collidesWithShip(const Ship& ship) const {
     // Only alien bullets can hit the ship
     if (!is_from_alien) return false;
-    
+
     // Check if bullet rectangle overlaps with ship rectangle
     return (x < ship.getX() + constants::SHIP_WIDTH &&
             x + constants::BULLET_WIDTH > ship.getX() &&
@@ -49,6 +50,17 @@ bool Bullet::collidesWithAlien(const Alien& alien) const {
             x + constants::BULLET_WIDTH > alien.getX() &&
             y < alien.getY() + constants::ALIEN_RADIUS * 2 &&
             y + constants::BULLET_HEIGHT > alien.getY());
+}
+
+bool Bullet::collidesWithBarrier(const Barrier& barrier) const {
+    return (x < barrier.getX() + constants::BARRIER_WIDTH &&
+            x + constants::BULLET_WIDTH > barrier.getX() &&
+            y < constants::BARRIER_Y + constants::BARRIER_HEIGHT &&
+            y + constants::BULLET_HEIGHT > constants::BARRIER_Y);
+}
+
+void Bullet::change_direction() {
+    is_from_alien = !is_from_alien;
 }
 
 int Bullet::getX() const {

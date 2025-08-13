@@ -53,6 +53,11 @@ public:
      * @return Reference to the vector of bullets
      */
     const std::vector<Bullet>& getBullets() const;
+    
+    /**
+     * @return Mutable reference to the vector of bullets
+     */
+    std::vector<Bullet>& getBullets();
 };
 
 #endif

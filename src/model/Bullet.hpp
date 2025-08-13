@@ -3,6 +3,7 @@
 
 #include "Alien.hpp"
 #include "Ship.hpp"
+#include "Barrier.hpp"
 
 /**
  * @brief Represents a bullet in the game and manages its state
@@ -41,6 +42,17 @@ public:
      * @return true if the bullet collides with the alien, false otherwise
      */
     bool collidesWithAlien(const Alien& alien) const;
+
+    /**
+     * @param barrier The barrier to check collision with
+     * @return true if the bullet collides with the barrier, false otherwise
+     */
+    bool collidesWithBarrier(const Barrier& barrier) const;
+    
+    /**
+     * @brief Changes the bullet's direction (for barrier bouncing)
+     */
+    void change_direction();
 
     /**
      * @return true if the bullet is out of bounds, false otherwise

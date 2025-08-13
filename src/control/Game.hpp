@@ -7,6 +7,7 @@
 #include "ShipControl.hpp"
 #include "AlienBlockControl.hpp"
 #include "BulletControl.hpp"
+#include "BarrierControl.hpp"
 
 // Game class
 class Game {
@@ -42,6 +43,7 @@ private:
     BulletControl bullet_control;
     ShipControl ship_control;
     AlienBlockControl alien_block_control;
+    BarrierControl barrier_control;
 
     bool is_game_over = false;
     int points = 0;

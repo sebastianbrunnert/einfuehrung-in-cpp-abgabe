@@ -14,5 +14,10 @@ namespace constants {
     constexpr int BULLET_WIDTH = 2;
     constexpr int BULLET_HEIGHT = 10;
     constexpr int BULLET_FIRE_RATE = 500;
+    constexpr int BARRIER_WIDTH = 70;
+    constexpr int BARRIER_HEIGHT = 5;
+    constexpr int BARRIER_SPEED = 5;
+    constexpr int BARRIER_X = 270;
+    constexpr int BARRIER_Y = 300;
     constexpr unsigned int FRAME_RATE = 60;
 }

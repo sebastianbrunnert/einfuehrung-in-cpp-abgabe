@@ -13,7 +13,8 @@ Game::Game()
       information_layer(window),
       bullet_control(game_layer),
       ship_control(game_layer, information_layer, bullet_control),
-      alien_block_control(game_layer, bullet_control) 
+      alien_block_control(game_layer, bullet_control),
+      barrier_control(game_layer, bullet_control) 
 {
     window.setFramerateLimit(constants::FRAME_RATE);
 
@@ -81,9 +82,10 @@ void Game::update(float time_passed) {
     // Update bullets
     bullet_control.update_bullets();
 
-    // Check for collisions
+    // Update barrier
+    barrier_control.update_barrier();
 
-    // Update points
+    // Check for collisions (and update points)
     points = points + alien_block_control.check_collisions();
     try {
         ship_control.check_collisions();
@@ -91,6 +93,7 @@ void Game::update(float time_passed) {
         // If ship is hit and has no lives, game is over
         is_game_over = true;
     }
+    barrier_control.check_collisions();
 
     // Shoot bullets from the alien block
     static int shoot_prob = 5;
@@ -101,6 +104,7 @@ void Game::update(float time_passed) {
         alien_block_control.reset();
         speed = speed * 1.3f;
         shoot_prob = shoot_prob + 3;
+        points = points + 50;
     }
 }
 
@@ -141,6 +145,7 @@ void Game::draw() {
     bullet_control.draw_bullets();
     alien_block_control.draw_alien_block();
     ship_control.draw_lives();
+    barrier_control.draw_barrier();
 
     draw_informations();
 
